@@ -168,16 +168,18 @@
           </q-card>
         </div>
       </div>
-
+      <c-pdf/>
     </div>
   </q-page>
 </template>
 
 <script>
 import { GChart } from 'vue-google-charts'
+import cpdf from '../components/Pdf.vue'
 
 export default {
   components: {
+    'c-pdf': cpdf,
     GChart
   },
   data () {

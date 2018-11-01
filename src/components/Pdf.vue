@@ -161,7 +161,7 @@ export default {
         startY: doc.autoTableEndPosY() + 40,
         margin: {horizontal: 40}
       })
-        doc.save('info.pdf')
+      doc.save('info.pdf')
     }
   }
 }

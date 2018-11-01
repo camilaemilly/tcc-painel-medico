@@ -2,13 +2,23 @@ import axios from '../../plugins/axios'
 
 export default {
   state: {
-    emergencias: []
+    emergencias: [],
+    emergenciasPdf: []
   },
   actions: {
     getEmergencia ({ commit }) {
       axios.get('/emergencia')
         .then(res => {
           commit('setEmergencia', res.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    getEmergenciaPdf ({ commit }) {
+      axios.get('/emergencia/pdf')
+        .then(res => {
+          commit('setEmergenciaPdf', res.data)
         })
         .catch(err => {
           console.log(err)
@@ -39,11 +49,17 @@ export default {
         arrayAux.doadorDeOrgaos = 'Sim'
       }
       state.emergencias = arrayAux
+    },
+    setEmergenciaPdf (state, data) {
+      state.emergenciasPdf = data
     }
   },
   getters: {
     getEmergencias: (state) => {
       return state.emergencias
+    },
+    getEmergenciasPdf: (state) => {
+      return state.emergenciasPdf
     }
   }
 }
