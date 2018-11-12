@@ -13,24 +13,12 @@
       >
         <q-list-header>
           <div class="row justify-center" style="padding-top: 10%; padding-bottom: 10%;">
-             <img src="~assets/logo_branco.png"  width="85%" height="40%" style="padding-right: 7%">
+             <img src="~assets/logo.png"  width="85%" height="40%" style="padding-right: 7%">
           </div>
         </q-list-header>
         <q-item to="/home">
           <q-item-side icon="timeline" />
           <q-item-main label="Dashboard" />
-        </q-item>
-        <q-item to="/alergia">
-          <q-item-side icon="scatter_plot" />
-          <q-item-main label="Alergias" />
-        </q-item>
-        <q-item to="/cirurgia">
-          <q-item-side icon="healing" />
-          <q-item-main label="Cirurgias" />
-        </q-item>
-        <q-item to="/doenca">
-          <q-item-side icon="local_hospital" />
-          <q-item-main label="Doenças"/>
         </q-item>
       </q-list>
     </q-layout-drawer>
@@ -62,15 +50,12 @@ export default {
 
 <style>
 .q-layout {
-  background-color: #f3f1f1;
+  background-color: rgba(128, 128, 128, 0.349);
 }
 .q-layout-drawer {
-  background: linear-gradient(0deg, rgb(98, 172, 227, 1) 0%, rgba(72, 44, 191, 1) 100%);
+  background: white;
 }
 .q-item-main {
-  color: white;
-}
-.q-item-side {
-  color: white;
+  color: gray;
 }
 </style>

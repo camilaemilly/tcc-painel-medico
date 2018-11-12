@@ -1,12 +1,13 @@
 import axios from '../../plugins/axios'
 
+/*eslint-disable */
 export default {
   state: {
-    perfil: {}
+    usuarios: []
   },
   actions: {
     getUsuario ({ commit }) {
-      axios.get('/usuario')
+      axios.get('/api/usuario')
         .then(res => {
           commit('setUsuario', res.data)
         })
@@ -17,12 +18,12 @@ export default {
   },
   mutations: {
     setUsuario (state, data) {
-      state.perfil = data
+      state.usuarios = data
     }
   },
   getters: {
     getUsuario: (state) => {
-      return state.perfil
+      return state.usuarios
     }
   }
 }

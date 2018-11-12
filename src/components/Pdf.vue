@@ -15,11 +15,19 @@ export default {
     return {}
   },
   created () {
-    this.$store.dispatch('getEmergenciaPdf')
+    this.$store.dispatch('getUsuario')
+    this.$store.dispatch('getRemedios')
+    this.$store.dispatch('getConsultas')
   },
   computed: {
-    getEmergenciaPdf () {
-      return this.$store.getters.getEmergenciasPdf
+    getUsuario () {
+      return this.$store.getters.getUsuario
+    },
+    getConsulta () {
+      return this.$store.getters.getConsultas
+    },
+    getRemedio () {
+      return this.$store.getters.getRemedios
     }
   },
   methods: {
@@ -32,102 +40,58 @@ export default {
     exportPdf () {
       let endereco = []
       endereco.push(
-        {rua: this.getEmergenciaPdf.endereco.rua,
-          numero: this.getEmergenciaPdf.endereco.numero,
-          bairro: this.getEmergenciaPdf.endereco.bairro,
-          complemento: this.getEmergenciaPdf.endereco.complemento,
-          cidade: this.getEmergenciaPdf.endereco.cidade,
-          estado: this.getEmergenciaPdf.endereco.estado})
+        {peso: this.getUsuario.peso,
+          altura: this.getUsuario.altura,
+          sexo: this.getUsuario.sexo,
+          cep: this.getUsuario.cep,
+          telefone: this.getUsuario.telefone,
+          cidade: this.getUsuario.cidade,
+          estado: this.getUsuario.estado})
 
-      let problemasCardiacos = []
-      problemasCardiacos.push(
-        {problemasCardiacos: this.getEmergenciaPdf.problemasCardiacos})
-
-      let emergencia = []
-      emergencia.push(
-        {ataqueConvulsivos: this.validar(this.getEmergenciaPdf.ataqueConvulsivos),
-          doadorDeOrgaos: this.validar(this.getEmergenciaPdf.doadorDeOrgaos),
-          hipertensao: this.validar(this.getEmergenciaPdf.hipertensao),
-          diabetes: this.validar(this.getEmergenciaPdf.diabetes),
-          tipoSanguineo: this.getEmergenciaPdf.tipoSanguineo.tipoSanguineo})
-
-      function arrumarMedicamentos (array) {
-        let nomesMedicamentos = ''
-        array.forEach(function (value) {
-          if (nomesMedicamentos === '') {
-            nomesMedicamentos = value.nomeMedicamento
-          } else {
-            nomesMedicamentos = nomesMedicamentos + ', ' + value.nomeMedicamento
-          }
-        })
-        return nomesMedicamentos
-      }
-
-      let alergia = []
-      this.getEmergenciaPdf.alergias.forEach(function (value) {
-        alergia.push({tipoAlergia: value.tipoAlergia,
-          localAfetado: value.localAfetado,
-          dataDescoberta: value.dataDescoberta,
-          efeitos: value.efeitos,
-          medicamentos: arrumarMedicamentos(value.medicamentos)})
+      let consulta = []
+      this.getConsulta.forEach(function (value) {
+        consulta.push({local: value.local,
+          medico: value.medico,
+          motivo: value.motivo,
+          data: value.data,
+          horario: value.horario})
       })
 
-      let cirurgia = []
-      this.getEmergenciaPdf.cirurgias.forEach(function (value) {
-        cirurgia.push({tipoCirurgia: value.tipoCirurgia,
-          clinicaResponsavel: value.clinicaResponsavel,
-          dataDescoberta: value.dataDescoberta,
-          medicoResponsavel: value.medicoResponsavel,
-          medicamentos: arrumarMedicamentos(value.medicamentos)})
-      })
-
-      let doenca = []
-      this.getEmergenciaPdf.doencas.forEach(function (value) {
-        doenca.push({nomeDoenca: value.nomeDoenca,
-          dataDescoberta: value.dataDescoberta,
-          medicamentos: arrumarMedicamentos(value.medicamentos)})
+      let remedio = []
+      this.getRemedio.forEach(function (value) {
+        remedio.push({nome: value.nome,
+          dataFim: value.dataFim,
+          dataInicio: value.dataInicio,
+          periodicidade: value.periodicidade,
+          horario: value.horario})
       })
 
       var columnsEndereco = [
-        {title: 'Rua', dataKey: 'rua'},
-        {title: 'Número', dataKey: 'numero'},
-        {title: 'Bairro', dataKey: 'bairro'},
-        {title: 'Complemento', dataKey: 'complemento'},
+        {title: 'Peso', dataKey: 'peso'},
+        {title: 'Altura', dataKey: 'altura'},
+        {title: 'Sexo', dataKey: 'sexo'},
+        {title: 'CEP', dataKey: 'cep'},
+        {title: 'Telefone', dataKey: 'telefone'},
         {title: 'Cidade', dataKey: 'cidade'},
         {title: 'Estado', dataKey: 'estado'}]
 
-      var columnsProblemasCardiacos = [
-        {title: 'Problemas Cardíacos', dataKey: 'problemasCardiacos'}]
+      var columnsConsulta = [
+        {title: 'Local', dataKey: 'local'},
+        {title: 'Médico', dataKey: 'medico'},
+        {title: 'Motivo', dataKey: 'motivo'},
+        {title: 'Data', dataKey: 'data'},
+        {title: 'Horário', dataKey: 'horario'}]
 
-      var columnsEmergencia = [
-        {title: 'Ataques convulsivos', dataKey: 'ataqueConvulsivos'},
-        {title: 'Doador de orgãos', dataKey: 'doadorDeOrgaos'},
-        {title: 'Hipertensão', dataKey: 'hipertensao'},
-        {title: 'Diabetes', dataKey: 'diabetes'},
-        {title: 'Tipo sanguíneo', dataKey: 'tipoSanguineo'}]
-
-      var columnsAlergia = [
-        {title: 'Tipo da alergia', dataKey: 'tipoAlergia'},
-        {title: 'Local afetado', dataKey: 'localAfetado'},
-        {title: 'Data da descoberta', dataKey: 'dataDescoberta'},
-        {title: 'efeitos', dataKey: 'efeitos'},
-        {title: 'Medicamentos', dataKey: 'medicamentos'}]
-
-      var columnsCirurgia = [
-        {title: 'Tipo da cirurgia', dataKey: 'tipoCirurgia'},
-        {title: 'Clínica responsável', dataKey: 'clinicaResponsavel'},
-        {title: 'Data da descoberta', dataKey: 'dataDescoberta'},
-        {title: 'Médico responsável', dataKey: 'medicoResponsavel'},
-        {title: 'Medicamentos', dataKey: 'medicamentos'}]
-
-      var columnsDoenca = [
-        {title: 'Nome da doença', dataKey: 'nomeDoenca'},
-        {title: 'Data da descoberta', dataKey: 'dataDescoberta'},
-        {title: 'Medicamentos', dataKey: 'medicamentos'}]
+      var columnsRemedio = [
+        {title: 'Nome', dataKey: 'nome'},
+        {title: 'Data Fim', dataKey: 'dataFim'},
+        {title: 'Data Início', dataKey: 'dataInicio'},
+        {title: 'Periodicidade', dataKey: 'periodicidade'},
+        {title: 'Horário', dataKey: 'horario'}]
 
       var doc = new jsPDF('p', 'pt')
 
-      doc.text(200, 40, '' + this.getEmergenciaPdf.nomeDoUsuario)
+      doc.text(200, 40, '' + this.getUsuario.nomeCompleto)
       doc.setFontSize(16)
       doc.autoTable(columnsEndereco, endereco, {
         startY: 70,
@@ -135,29 +99,13 @@ export default {
         theme: 'plain'
       })
       doc.setFontSize(12)
-      doc.text('Informações gerais de saúde', 42, doc.autoTable.previous.finalY + 30)
-      doc.autoTable(columnsEmergencia, emergencia, {
-        startY: doc.autoTableEndPosY() + 40,
-        margin: {horizontal: 40},
-        theme: 'plain'
-      })
-      doc.autoTable(columnsProblemasCardiacos, problemasCardiacos, {
-        startY: doc.autoTableEndPosY() + 5,
-        margin: {horizontal: 40},
-        theme: 'plain'
-      })
-      doc.text('Alergias', 40, doc.autoTable.previous.finalY + 20)
-      doc.autoTable(columnsAlergia, alergia, {
+      doc.text('Consultas', 40, doc.autoTable.previous.finalY + 20)
+      doc.autoTable(columnsConsulta, consulta, {
         startY: doc.autoTableEndPosY() + 30,
         margin: {horizontal: 40}
       })
-      doc.text('Cirurgias', 40, doc.autoTable.previous.finalY + 30)
-      doc.autoTable(columnsCirurgia, cirurgia, {
-        startY: doc.autoTableEndPosY() + 40,
-        margin: {horizontal: 40}
-      })
-      doc.text('Doenças', 40, doc.autoTable.previous.finalY + 30)
-      doc.autoTable(columnsDoenca, doenca, {
+      doc.text('Remédios', 40, doc.autoTable.previous.finalY + 30)
+      doc.autoTable(columnsRemedio, remedio, {
         startY: doc.autoTableEndPosY() + 40,
         margin: {horizontal: 40}
       })

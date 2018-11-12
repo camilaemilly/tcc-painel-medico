@@ -10,27 +10,6 @@ const routes = [
     children: [
       { path: '', component: () => import('pages/Index.vue') }
     ]
-  },
-  {
-    path: '/doenca',
-    component: () => import('layouts/MyLayout.vue'),
-    children: [
-      { path: '', component: () => import('pages/Doenca.vue') }
-    ]
-  },
-  {
-    path: '/cirurgia',
-    component: () => import('layouts/MyLayout.vue'),
-    children: [
-      { path: '', component: () => import('pages/Cirurgia.vue') }
-    ]
-  },
-  {
-    path: '/alergia',
-    component: () => import('layouts/MyLayout.vue'),
-    children: [
-      { path: '', component: () => import('pages/Alergia.vue') }
-    ]
   }
 ]
 

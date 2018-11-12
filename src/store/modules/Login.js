@@ -5,11 +5,12 @@ export default {
     token: ''
   },
   actions: {
-    login ({ commit }, identificador) {
+    login ({ commit }, json) {
+      console.log(json.identificador)
       commit('zerarArray')
       Loading.show()
-      axios.post('/token', {
-        identificador: identificador
+      axios.post('/api/token', {
+        identificador: json.identificador
       })
         .then(res => {
           window.localStorage.setItem('token', res.data)

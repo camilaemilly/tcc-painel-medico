@@ -1,13 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import alergia from './modules/Alergia'
-import cirurgia from './modules/Cirurgia'
-import doenca from './modules/Doenca'
-import emergencia from './modules/Emergencia'
+import hemoglobina from './modules/Hemoglobina'
 import login from './modules/Login'
-import medicamento from './modules/Medicamento'
 import usuario from './modules/Usuario'
+import consultas from './modules/Consultas'
+import remedios from './modules/Remedios'
+import alarme from './modules/Alarme'
 
 Vue.use(Vuex)
 
@@ -19,13 +18,12 @@ Vue.use(Vuex)
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
-      alergia,
-      cirurgia,
-      doenca,
-      emergencia,
       login,
-      medicamento,
-      usuario
+      hemoglobina,
+      usuario,
+      consultas,
+      remedios,
+      alarme
     }
   })
 

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-axios.defaults.baseURL = 'http://api.minderapplication.com/api'
-axios.defaults.headers.common['token'] = '' // window.localStorage.getItem('token')
+axios.defaults.baseURL = 'https://diabetes20.herokuapp.com'
+axios.defaults.headers.common['token'] = window.localStorage.getItem('token')
 
 export default axios
